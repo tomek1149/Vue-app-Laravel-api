@@ -121,7 +121,7 @@ export default {
   created() {
     eventBus.$on("removedTodo", index => this.removeTodo(index));
     eventBus.$on("finishedEdit", data => this.finishedEdit(data));
-    // eventBus.$on("checkAllChanged", checked => this.checkAllTodos(checked));
+    eventBus.$on("checkAllChanged", checked => this.checkAllTodos(checked));
   },
 
   computed: {
