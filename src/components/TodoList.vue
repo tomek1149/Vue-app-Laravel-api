@@ -28,7 +28,6 @@
 
     <div class="extra-container">
       <todo-filtered></todo-filtered>
-
       <div>
         <transition name="fade">
           <todo-clear-completed></todo-clear-completed>
@@ -69,6 +68,7 @@ export default {
       return this.$store.getters.todosFiltered;
     }
   },
+
   methods: {
     addTodo() {
       if (this.newTodo.trim().length == 0) {
