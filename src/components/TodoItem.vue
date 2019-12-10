@@ -75,7 +75,8 @@ export default {
 
   methods: {
     removeTodo(index) {
-      this.$emit("removedTodo", index);
+      //event
+      eventBus.$emit("removedTodo", index);
     },
     editTodo() {
       this.beforEditCache = this.title;
@@ -86,7 +87,9 @@ export default {
         this.title = this.beforeEditCache;
       }
       this.editing = false;
-      this.$emit("finishedEdit", {
+
+      //event
+      eventBus.$emit("finishedEdit", {
         index: this.index,
         todo: {
           id: this.id,

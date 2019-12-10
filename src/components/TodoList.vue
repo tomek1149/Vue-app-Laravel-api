@@ -18,8 +18,6 @@
         :todo="todo"
         :index="index"
         :checkAll="!anyRemaining"
-        @removedTodo="removeTodo"
-        @finishedEdit="finishedEdit"
       >
         <!-- <div class="todo-item-left">
           <input type="checkbox" v-model="todo.completed" />
@@ -120,6 +118,11 @@ export default {
         }
       ]
     };
+  },
+
+  created() {
+    eventBus.$on("removedTodo", index => this.removeTodo(index));
+    eventBus.$on("finishedEdit", index => this.finishedEdit(index));
   },
 
   computed: {
