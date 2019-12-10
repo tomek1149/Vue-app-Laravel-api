@@ -56,7 +56,8 @@
           Check All</label
         >
       </div>
-      <div>{{ remaining }} items left</div>
+      <!-- goes to TodoItemsRemaining.vue -->
+      <!-- <div>{{ remaining }} items left</div> -->
     </div>
 
     <div class="extra-container">

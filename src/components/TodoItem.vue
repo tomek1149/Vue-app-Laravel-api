@@ -60,6 +60,10 @@ export default {
     eventBus.$on("pluralize", this.handlePluralize);
   },
 
+  beforeDestroy() {
+    eventBus.$off("pluralize", this.handlePluralize);
+  },
+
   watch: {
     checkAll() {
       //   if (this.checkAll) {
@@ -114,6 +118,15 @@ export default {
     },
     handlePluralize() {
       this.title = this.title + "s";
+      eventBus.$emit("finishedEdit", {
+        index: this.index,
+        todo: {
+          id: this.id,
+          title: this.title,
+          completed: this.completed,
+          editing: this.editing
+        }
+      });
     }
   }
 };
