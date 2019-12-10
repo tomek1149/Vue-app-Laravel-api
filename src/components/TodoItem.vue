@@ -22,9 +22,10 @@
       />
     </div>
     <div>
-      <div class="remove-item" @click="removeTodo(index)">
+      <button @click="pluralize">Plural</button>
+      <span class="remove-item" @click="removeTodo(index)">
         &times;
-      </div>
+      </span>
     </div>
   </div>
 </template>
