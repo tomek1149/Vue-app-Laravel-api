@@ -46,18 +46,9 @@
       </todo-item>
     </transition-group>
     <div class="extra-container">
-      <div>
-        <label
-          ><input
-            type="checkbox"
-            :checked="!anyRemaining"
-            @change="checkAllTodos"
-          />
-          Check All</label
-        >
-      </div>
+      <todo-check-all :anyRemaining="anyRemaining"></todo-check-all>
 
-      <TodoItemsRemaining :remaining="remaining"> </TodoItemsRemaining>
+      <todo-items-remaining :remaining="remaining"> </todo-items-remaining>
       <!-- goes to TodoItemsRemaining.vue -->
       <!-- <div>{{ remaining }} items left</div> -->
     </div>
@@ -95,12 +86,14 @@
 <script>
 import TodoItem from "./TodoItem";
 import TodoItemsRemaining from "./TodoItemsRemaining";
+import TodoCheckAll from "./TodoCheckAll";
 
 export default {
   name: "todo-list",
   components: {
     TodoItem,
-    TodoItemsRemaining
+    TodoItemsRemaining,
+    TodoCheckAll
   },
   data() {
     return {
@@ -128,6 +121,7 @@ export default {
   created() {
     eventBus.$on("removedTodo", index => this.removeTodo(index));
     eventBus.$on("finishedEdit", data => this.finishedEdit(data));
+    eventBus.$on("checkAllChanged", checked => this.checkAllTodos(checked));
   },
 
   computed: {
