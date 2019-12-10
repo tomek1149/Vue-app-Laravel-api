@@ -122,7 +122,7 @@ export default {
 
   created() {
     eventBus.$on("removedTodo", index => this.removeTodo(index));
-    eventBus.$on("finishedEdit", index => this.finishedEdit(index));
+    eventBus.$on("finishedEdit", data => this.finishedEdit(data));
   },
 
   computed: {
