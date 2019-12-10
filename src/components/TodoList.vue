@@ -58,9 +58,9 @@
 
       <div>
         <transition name="fade">
-          <button v-if="showClearCompletedButton" @click="clearCompleted">
-            Clear Completed
-          </button>
+          <todo-clear-completed
+            :showClearCompletedButton="showClearCompletedButton"
+          ></todo-clear-completed>
         </transition>
       </div>
     </div>
@@ -72,6 +72,7 @@ import TodoItem from "./TodoItem";
 import TodoItemsRemaining from "./TodoItemsRemaining";
 import TodoCheckAll from "./TodoCheckAll";
 import TodoFiltered from "./TodoFiltered";
+import TodoClearCompleted from "./TodoClearCompleted";
 
 export default {
   name: "todo-list",
@@ -79,7 +80,8 @@ export default {
     TodoItem,
     TodoItemsRemaining,
     TodoCheckAll,
-    TodoFiltered
+    TodoFiltered,
+    TodoClearCompleted
   },
   data() {
     return {
@@ -109,6 +111,15 @@ export default {
     eventBus.$on("finishedEdit", data => this.finishedEdit(data));
     eventBus.$on("checkAllChanged", checked => this.checkAllTodos(checked));
     eventBus.$on("filterChanged", filter => (this.filter = filter));
+    eventBus.$on("clearCompletedTodos", () => this.clearCompleted());
+  },
+
+  beforeDestroy() {
+    eventBus.$off("removedTodo", index => this.removeTodo(index));
+    eventBus.$off("finishedEdit", data => this.finishedEdit(data));
+    eventBus.$off("checkAllChanged", checked => this.checkAllTodos(checked));
+    eventBus.$off("filterChanged", filter => (this.filter = filter));
+    eventBus.$off("clearCompletedTodos", () => this.clearCompleted());
   },
 
   computed: {

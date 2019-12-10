@@ -117,7 +117,7 @@ export default {
       eventBus.$emit("pluralize");
     },
     handlePluralize() {
-      this.title = this.title + "s";
+      this.title = this.title + "'s";
       eventBus.$emit("finishedEdit", {
         index: this.index,
         todo: {
