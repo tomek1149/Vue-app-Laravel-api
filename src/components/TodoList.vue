@@ -56,6 +56,8 @@
           Check All</label
         >
       </div>
+
+      <TodoItemsRemaining :remaining="remaining"> </TodoItemsRemaining>
       <!-- goes to TodoItemsRemaining.vue -->
       <!-- <div>{{ remaining }} items left</div> -->
     </div>
@@ -92,11 +94,13 @@
 
 <script>
 import TodoItem from "./TodoItem";
+import TodoItemsRemaining from "./TodoItemsRemaining";
 
 export default {
   name: "todo-list",
   components: {
-    TodoItem
+    TodoItem,
+    TodoItemsRemaining
   },
   data() {
     return {
