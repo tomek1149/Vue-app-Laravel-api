@@ -84,9 +84,10 @@ export default {
   },
 
   methods: {
-    removeTodo(index) {
+    removeTodo(id) {
       //event
-      eventBus.$emit("removedTodo", index);
+      const index = this.$store.state.todos.findIndex(item => item.id == id);
+      this.$store.state.todos.splice(index, 1);
     },
     editTodo() {
       this.beforEditCache = this.title;
