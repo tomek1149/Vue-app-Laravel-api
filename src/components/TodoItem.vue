@@ -56,6 +56,9 @@ export default {
       beforeEditCache: ""
     };
   },
+  created() {
+    eventBus.$on("pluralize", this.handlePluralize);
+  },
 
   watch: {
     checkAll() {
@@ -105,6 +108,9 @@ export default {
     cancelEdit() {
       this.title = this.beforeEditCache;
       this.editing = false;
+    },
+    pluralize() {
+      eventBus.$emit("pluralize");
     }
   }
 };
