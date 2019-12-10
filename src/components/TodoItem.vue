@@ -84,9 +84,8 @@ export default {
   },
 
   methods: {
-    removeTodo(index) {
-      //event
-      eventBus.$emit("removedTodo", index);
+    removeTodo(id) {
+      this.$store.dispatch("deleteTodo", id);
     },
     editTodo() {
       this.beforEditCache = this.title;
@@ -97,17 +96,23 @@ export default {
         this.title = this.beforeEditCache;
       }
       this.editing = false;
+      this.$store.dispatch("updateTodo", {
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
+      });
 
       //event
-      eventBus.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          completed: this.completed,
-          editing: this.editing
-        }
-      });
+      //   eventBus.$emit("finishedEdit", {
+      //     index: this.index,
+      //     todo: {
+      //       id: this.id,
+      //       title: this.title,
+      //       completed: this.completed,
+      //       editing: this.editing
+      //     }
+      //   });
     },
     cancelEdit() {
       this.title = this.beforeEditCache;
@@ -118,14 +123,14 @@ export default {
     },
     handlePluralize() {
       this.title = this.title + "'s";
-      eventBus.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          completed: this.completed,
-          editing: this.editing
-        }
+      const index = this.$store.state.todos.findIndex(
+        item => item.id == this.id
+      );
+      this.$store.state.todos.splice(index, 1, {
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
       });
     }
   }
