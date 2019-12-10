@@ -21,8 +21,10 @@
         v-focus
       />
     </div>
-    <div class="remove-item" @click="removeTodo(index)">
-      &times;
+    <div>
+      <div class="remove-item" @click="removeTodo(index)">
+        &times;
+      </div>
     </div>
   </div>
 </template>
