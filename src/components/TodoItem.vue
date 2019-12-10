@@ -111,6 +111,9 @@ export default {
     },
     pluralize() {
       eventBus.$emit("pluralize");
+    },
+    handlePluralize() {
+      this.title = this.title + "s";
     }
   }
 };
