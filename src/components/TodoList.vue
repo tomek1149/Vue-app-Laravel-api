@@ -22,7 +22,7 @@
       </todo-item>
     </transition-group>
     <div class="extra-container">
-      <todo-check-all :anyRemaining="anyRemaining"></todo-check-all>
+      <todo-check-all></todo-check-all>
       <todo-items-remaining> </todo-items-remaining>
     </div>
 
@@ -80,8 +80,8 @@ export default {
   },
 
   created() {
-    eventBus.$on("removedTodo", index => this.removeTodo(index));
-    eventBus.$on("finishedEdit", data => this.finishedEdit(data));
+    // eventBus.$on("removedTodo", index => this.removeTodo(index));
+    // eventBus.$on("finishedEdit", data => this.finishedEdit(data));
     eventBus.$on("checkAllChanged", checked => this.checkAllTodos(checked));
     eventBus.$on(
       "filterChanged",
@@ -91,14 +91,11 @@ export default {
   },
 
   beforeDestroy() {
-    eventBus.$off("removedTodo", index => this.removeTodo(index));
-    eventBus.$off("finishedEdit", data => this.finishedEdit(data));
-    eventBus.$off("checkAllChanged", checked => this.checkAllTodos(checked));
-    eventBus.$off(
-      "filterChanged",
-      filter => (this.$store.state.filter = filter)
-    );
-    eventBus.$off("clearCompletedTodos", () => this.clearCompleted());
+    // eventBus.$off("removedTodo");
+    // eventBus.$off("finishedEdit");
+    eventBus.$off("checkAllChanged");
+    eventBus.$off("filterChanged");
+    eventBus.$off("clearCompletedTodos");
   },
 
   computed: {
@@ -129,10 +126,10 @@ export default {
       this.newTodo = "";
       this.idForTodo++;
     },
-    removeTodo(id) {
-      const index = this.$store.state.todos.findIndex(item => item.id == id);
-      this.$store.state.todos.splice(index, 1);
-    },
+    // removeTodo(id) {
+    //   const index = this.$store.state.todos.findIndex(item => item.id == id);
+    //   this.$store.state.todos.splice(index, 1);
+    // },
     checkAllTodos() {
       this.$store.state.todos.forEach(
         todo => (todo.completed = event.target.checked)
@@ -144,7 +141,10 @@ export default {
       );
     },
     finishedEdit(data) {
-      this.$store.state.todos.splice(data.index, 1, data.todo);
+      const index = this.$store.state.todos.findIndex(
+        item => item.id == data.id
+      );
+      this.$store.state.todos.splice(data.index, 1, data);
     }
   }
 };

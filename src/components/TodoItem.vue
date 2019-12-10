@@ -85,7 +85,6 @@ export default {
 
   methods: {
     removeTodo(id) {
-      //event
       const index = this.$store.state.todos.findIndex(item => item.id == id);
       this.$store.state.todos.splice(index, 1);
     },
@@ -99,16 +98,25 @@ export default {
       }
       this.editing = false;
 
-      //event
-      eventBus.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          completed: this.completed,
-          editing: this.editing
-        }
+      const index = this.$store.state.todos.findIndex(
+        item => item.id == this.id
+      );
+      this.$store.state.todos.splice(index, 1, {
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
       });
+      //event
+      //   eventBus.$emit("finishedEdit", {
+      //     index: this.index,
+      //     todo: {
+      //       id: this.id,
+      //       title: this.title,
+      //       completed: this.completed,
+      //       editing: this.editing
+      //     }
+      //   });
     },
     cancelEdit() {
       this.title = this.beforeEditCache;
@@ -119,14 +127,14 @@ export default {
     },
     handlePluralize() {
       this.title = this.title + "'s";
-      eventBus.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          completed: this.completed,
-          editing: this.editing
-        }
+      const index = this.$store.state.todos.findIndex(
+        item => item.id == this.id
+      );
+      this.$store.state.todos.splice(index, 1, {
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
       });
     }
   }
