@@ -136,15 +136,20 @@ export const store = new Vuex.Store({
                 .catch(error => {
                     console.log(error)
                 })
-
-
-
         },
 
         checkAll(context, checked) {
-            setTimeout(() => {
-                context.commit('checkAll', checked)
-            }, 100)
+            axios.patch('/todosCheckAll/', {
+                completed: checked,
+            })
+                .then(response => {
+                    context.commit('checkAll', checked)
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
         },
 
         updateFilter(context, filter) {
