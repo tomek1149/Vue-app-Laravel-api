@@ -159,9 +159,18 @@ export const store = new Vuex.Store({
         },
 
         clearCompleted(context) {
-            setTimeout(() => {
-                context.commit('clearCompleted')
-            }, 100)
+            axios.delete('/todosDeleteCompleted', {
+                data: {
+                    todos: completed
+                }
+            })
+                .then(response => {
+                    context.commit('clearCompleted')
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
 
         }
     }
