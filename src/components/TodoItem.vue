@@ -23,7 +23,7 @@
     </div>
     <div>
       <button @click="pluralize">Plural</button>
-      <span class="remove-item" @click="removeTodo(index)">
+      <span class="remove-item" @click="removeTodo(todo.id)">
         &times;
       </span>
     </div>
@@ -38,10 +38,10 @@ export default {
       type: Object,
       required: true
     },
-    index: {
-      type: Number,
-      required: true
-    },
+    // index: {
+    //   type: Number,
+    //   required: true
+    // },
     checkAll: {
       type: Boolean,
       required: true
@@ -122,11 +122,9 @@ export default {
       eventBus.$emit("pluralize");
     },
     handlePluralize() {
-      this.title = this.title + "'s";
-      const index = this.$store.state.todos.findIndex(
-        item => item.id == this.id
-      );
-      this.$store.state.todos.splice(index, 1, {
+      this.title = this.title + "s";
+
+      this.$store.dispatch("updateTodo", {
         id: this.id,
         title: this.title,
         completed: this.completed,
