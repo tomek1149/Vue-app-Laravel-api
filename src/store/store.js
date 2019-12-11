@@ -115,10 +115,17 @@ export const store = new Vuex.Store({
         },
 
         updateTodo(context, todo) {
+            axios.patch('/todos/' + todo.id, {
+                title: todo.title,
+                completed: todo.completed,
+            })
+                .then(response => {
+                    context.commit('updateTodo', todo)
 
-            setTimeout(() => {
-                context.commit('updateTodo', todo)
-            }, 100)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
 
         deleteTodo(context, id) {
