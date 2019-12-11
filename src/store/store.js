@@ -9,18 +9,18 @@ export const store = new Vuex.Store({
     state: {
         filter: "all",
         todos: [
-            // {
-            //     id: 1,
-            //     title: "Finish Vue Screnncast",
-            //     completed: false,
-            //     editing: false
-            // },
-            // {
-            //     id: 2,
-            //     title: "Take over world",
-            //     completed: false,
-            //     editing: false
-            // }
+            {
+                id: 1,
+                title: "Finish Vue Screnncast",
+                completed: false,
+                editing: false
+            },
+            {
+                id: 2,
+                title: "Take over world",
+                completed: false,
+                editing: false
+            }
         ]
     },
     getters: {
@@ -153,12 +153,17 @@ export const store = new Vuex.Store({
         },
 
         updateFilter(context, filter) {
-            setTimeout(() => {
-                context.commit('updateFilter', filter)
-            }, 100)
+
+            context.commit('updateFilter', filter)
+
         },
 
         clearCompleted(context) {
+            const completed = store.state.todos
+                .filter(todo => todo.completed)
+                .map(todo => todo.id)
+
+
             axios.delete('/todosDeleteCompleted', {
                 data: {
                     todos: completed

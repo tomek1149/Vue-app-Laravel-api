@@ -13,10 +13,9 @@
       leave-active-class="animated fadeOutDown"
     >
       <todo-item
-        v-for="(todo, index) in todosFiltered"
+        v-for="todo in todosFiltered"
         :key="todo.id"
         :todo="todo"
-        :index="index"
         :checkAll="!anyRemaining"
       >
       </todo-item>
@@ -60,8 +59,8 @@ export default {
     };
   },
 
-  created(){
-    this.$store.dispatch('retrieveTodos')
+  created() {
+    this.$store.dispatch("retrieveTodos");
   },
 
   computed: {
