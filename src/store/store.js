@@ -120,7 +120,7 @@ export const store = new Vuex.Store({
                 completed: todo.completed,
             })
                 .then(response => {
-                    context.commit('updateTodo', todo)
+                    context.commit('updateTodo', response.data)
 
                 })
                 .catch(error => {
@@ -129,9 +129,16 @@ export const store = new Vuex.Store({
         },
 
         deleteTodo(context, id) {
-            setTimeout(() => {
-                context.commit('deleteTodo', id)
-            }, 100)
+            axios.delete('/todos/' + id)
+                .then(response => {
+                    context.commit('deleteTodo', id)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+
+
         },
 
         checkAll(context, checked) {
