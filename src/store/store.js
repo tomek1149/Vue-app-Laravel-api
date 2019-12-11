@@ -1,24 +1,26 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex)
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export const store = new Vuex.Store({
     state: {
         filter: "all",
         todos: [
-            {
-                id: 1,
-                title: "Finish Vue Screnncast",
-                completed: false,
-                editing: false
-            },
-            {
-                id: 2,
-                title: "Take over world",
-                completed: false,
-                editing: false
-            }
+            // {
+            //     id: 1,
+            //     title: "Finish Vue Screnncast",
+            //     completed: false,
+            //     editing: false
+            // },
+            // {
+            //     id: 2,
+            //     title: "Take over world",
+            //     completed: false,
+            //     editing: false
+            // }
         ]
     },
     getters: {
@@ -84,13 +86,32 @@ export const store = new Vuex.Store({
             state.todos = state.todos.filter(
                 todo => !todo.completed
             );
+        },
+        retrieveTodos(state, todos) {
+            state.todos = todos
         }
     },
     actions: {
+        retrieveTodos(context) {
+            axios.get('/todos')
+                .then(response => {
+                    context.commit('retrieveTodos', response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
         addTodo(context, todo) {
-            setTimeout(() => {
-                context.commit('addTodo', todo)
-            }, 100)
+            axios.post('/todos', {
+                title: todo.title,
+                completed: false,
+            })
+                .then(response => {
+                    context.commit('addTodo', response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
 
         updateTodo(context, todo) {

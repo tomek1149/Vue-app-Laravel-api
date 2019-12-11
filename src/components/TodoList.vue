@@ -60,6 +60,10 @@ export default {
     };
   },
 
+  created(){
+    this.$store.dispatch('retrieveTodos')
+  },
+
   computed: {
     anyRemaining() {
       return this.$store.getters.anyRemaining;
