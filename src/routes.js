@@ -2,8 +2,8 @@ import App from './App'
 import LandingPage from './components/marketing/LandingPage'
 import About from './components/marketing/About'
 import Login from './components/auth/Login'
+import Logout from './components/auth/Logout'
 import Register from './components/auth/Register'
-import TestTodosVariable from './components/marketing/TestTodosVariable'
 
 
 
@@ -15,8 +15,11 @@ const routes = [
     },
     {
         path: '/todo',
-        name: 'app',
-        component: App
+        name: 'todo',
+        component: App,
+        meta: {
+            requiresAuth: true,
+        }
     },
     {
         path: '/about',
@@ -26,18 +29,25 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: {
+            requiresVisitor: true,
+        }
     },
     {
         path: '/register',
         name: 'register',
-        component: Register
+        component: Register,
+        meta: {
+            requiresVisitor: true,
+        }
     },
     {
-        path: '/todos/:id',
-        name: 'todos',
-        component: TestTodosVariable
+        path: '/logout',
+        name: 'logout',
+        component: Logout
     },
+
 ]
 
 

@@ -18,3 +18,29 @@
     </form>
   </div>
 </template>
+
+
+<script>
+export default {
+  name: "login",
+  data() {
+    return {
+      username: "",
+      password: ""
+    };
+  },
+  methods: {
+    login() {
+      this.$store
+        .dispatch("retrieveToken", {
+          username: this.username,
+          password: this.password
+        })
+
+        .then(response => {
+          this.$router.push({ name: "todo" });
+        });
+    }
+  }
+};
+</script>
