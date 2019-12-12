@@ -12,22 +12,25 @@
       </li>
       <li>
         <a href="/">Register</a>
-      </li> -->
+      </li>-->
 
       <li>
         <router-link :to="{ name: 'home' }">Home</router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'app' }">App</router-link>
+        <router-link :to="{ name: 'todo' }">App</router-link>
       </li>
       <li>
         <router-link :to="{ name: 'about' }">About</router-link>
       </li>
-      <li>
+      <li v-if="!loggedIn">
         <router-link :to="{ name: 'login' }">Login</router-link>
       </li>
-      <li>
+      <li v-if="!loggedIn">
         <router-link :to="{ name: 'register' }">Register</router-link>
+      </li>
+      <li v-if="loggedIn">
+        <router-link :to="{ name: 'logout' }">Logout</router-link>
       </li>
     </ul>
 
@@ -36,10 +39,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    }
+  }
+};
 </script>
 
-<style>
+<style lang="scss">
 * {
   box-sizing: border-box;
   margin: 0;
@@ -75,5 +84,45 @@ export default {};
   letter-spacing: 0.1rem;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+// Auth Pages
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+.login-heading {
+  margin-bottom: 16px;
+}
+.form-control {
+  margin-bottom: 24px;
+}
+.mb-more {
+  margin-bottom: 42px;
+}
+.login-form {
+  max-width: 500px;
+  margin: auto;
+}
+.login-input {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 16px;
+  outline: 0;
+  border-radius: 3px;
+  border: 1px solid lightgrey;
+}
+.btn-submit {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #60bd4f;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  &:hover {
+    background: darken(#60bd4f, 10%);
+  }
 }
 </style>
