@@ -87,25 +87,41 @@ export const store = new Vuex.Store({
         },
         destroyToken(state) {
             state.token = null
-        }
+        },
+        clearTodos(state) {
+            state.todos = []
+        },
     },
     actions: {
+        retrieveName(context) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
+            return new Promise((resolve, reject) => {
+                axios.get('/user')
+                    .then(response => {
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        reject(error)
+                    })
+            })
+        },
+
+
+        clearTodos(context) {
+            context.commit('clearTodos')
+        },
         register(context, data) {
             return new Promise((resolve, reject) => {
                 axios.post('/register', {
                     name: data.name,
                     email: data.email,
                     password: data.password,
-
                 })
                     .then(response => {
-
                         resolve(response)
-
                     })
                     .catch(error => {
-                        localStorage.removeItem('access_token')
-                        context.commit('destroyToken')
                         reject(error)
                     })
             })
@@ -157,6 +173,8 @@ export const store = new Vuex.Store({
         },
 
         retrieveTodos(context) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
             axios.get('/todos')
                 .then(response => {
                     context.commit('retrieveTodos', response.data)
@@ -203,7 +221,7 @@ export const store = new Vuex.Store({
         },
 
         checkAll(context, checked) {
-            axios.patch('/todosCheckAll/', {
+            axios.patch('/todosCheckAll', {
                 completed: checked,
             })
                 .then(response => {

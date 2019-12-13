@@ -1,9 +1,9 @@
 <template>
   <div>
-    <label
-      ><input type="checkbox" :checked="!anyRemaining" @change="allChecked" />
-      Check All</label
-    >
+    <label>
+      <input type="checkbox" :checked="!anyRemaining" @change="allChecked" />
+      Check All
+    </label>
   </div>
 </template>
 

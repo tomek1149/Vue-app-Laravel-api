@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="name-container">Welcome, {{ name }}</div>
     <input
       type="text"
       class="todo-input"
@@ -17,12 +18,11 @@
         :key="todo.id"
         :todo="todo"
         :checkAll="!anyRemaining"
-      >
-      </todo-item>
+      ></todo-item>
     </transition-group>
     <div class="extra-container">
       <todo-check-all></todo-check-all>
-      <todo-items-remaining> </todo-items-remaining>
+      <todo-items-remaining></todo-items-remaining>
     </div>
 
     <div class="extra-container">
@@ -55,12 +55,16 @@ export default {
   data() {
     return {
       newTodo: "",
-      idForTodo: 3
+      idForTodo: 3,
+      name: "Test"
     };
   },
 
   created() {
     this.$store.dispatch("retrieveTodos");
+    this.$store.dispatch("retrieveName").then(response => {
+      this.name = response.data.name;
+    });
   },
 
   computed: {
@@ -157,6 +161,10 @@ export default {
   border-top: 1px solid lightgrey;
   padding-top: 14px;
   margin-bottom: 14px;
+}
+
+.name-container {
+  margin-bottom: 16px;
 }
 
 button {
